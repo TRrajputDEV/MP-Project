@@ -16,9 +16,6 @@ export default {
         body:    ['Mukta', 'Noto Sans Devanagari', 'sans-serif'],
         hindi:   ['Noto Sans Devanagari', 'Mukta', 'sans-serif'],
       },
-      backgroundImage: {
-        'pratap-gradient': 'linear-gradient(135deg, #8B0000 0%, #CC5200 50%, #FF6600 100%)',
-      },
     },
   },
   plugins: [],

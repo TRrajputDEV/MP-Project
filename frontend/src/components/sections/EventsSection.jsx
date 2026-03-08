@@ -1,136 +1,115 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const events = [
-  {
-    id: 1,
-    title: 'Annual Festival',
-    date: 'April 15, 2025',
+  { 
+    id: 1, 
+    title: 'Community Health Camp', 
+    date: '2026-07-20', 
     location: 'City Park, Main Ground',
-    type: 'upcoming',
-    desc: 'Join our grand annual festival — cultural programs, competitions and celebrations.',
+    status: 'upcoming', 
+    desc: 'Free health check-ups and consultation by certified doctors.', 
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800' 
   },
-  {
-    id: 2,
-    title: 'Youth Leadership Workshop',
-    date: 'March 28, 2025',
+  { 
+    id: 2, 
+    title: 'Tree Plantation Drive', 
+    date: '2025-06-10', 
+    location: 'Riverbank, East District',
+    status: 'past', 
+    desc: '500 saplings planted along the riverbank in collaboration with local schools.', 
+    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800' 
+  },
+  { 
+    id: 3, 
+    title: 'Youth Skill Workshop', 
+    date: '2026-08-15', 
     location: 'Community Hall, Block B',
-    type: 'upcoming',
-    desc: 'A unique workshop empowering youth with leadership skills.',
+    status: 'upcoming', 
+    desc: 'Digital literacy and communication skills training for rural youth.', 
+    image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800' 
   },
-  {
-    id: 3,
-    title: 'Winter Food Drive',
-    date: 'December 10, 2024',
-    location: 'District Centre',
-    type: 'past',
-    desc: 'Over 2,000 kg of food distributed to families in need.',
-  },
-]
+];
 
 export default function EventsSection() {
-  const [tab, setTab] = useState('upcoming')
-  const filtered = events.filter(e => e.type === tab)
+  const [tab, setTab] = useState('upcoming');
+  
+  // FIXED: Filtering by 'status' instead of 'type'
+  const filtered = events.filter((e) => e.status === tab);
 
   return (
-    <section className="py-20 bg-ivory">
-      <div className="max-w-6xl mx-auto px-6">
-
-        {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+    <section className="py-12 bg-ivory-dark relative border-y border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        
+        {/* Compact Header & Toggles */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
           <div>
-            <div className="section-accent" />
-            <h2 className="font-display text-3xl md:text-4xl text-charcoal">
-              Our Events
-            </h2>
+            <div className="w-12 h-1 rounded-full bg-crimson mb-3" />
+            <h2 className="font-display text-3xl md:text-4xl text-charcoal font-bold">Our Events</h2>
           </div>
-          <Link
-            to="/events"
-            className="text-saffron text-sm font-display font-semibold hover:text-crimson transition-colors self-start md:self-auto"
-          >
-            View All →
-          </Link>
-        </div>
-
-        {/* Tab toggle */}
-        <div className="flex gap-1 mb-10 bg-ivory-dark w-fit p-1 rounded-full">
-          {[
-            { val: 'upcoming', label: 'Upcoming' },
-            { val: 'past',     label: 'Past' },
-          ].map(({ val, label }) => (
-            <button
-              key={val}
-              onClick={() => setTab(val)}
-              className={`px-6 py-2.5 rounded-full text-sm font-display font-semibold transition-all ${
-                tab === val
-                  ? 'text-white shadow-md'
-                  : 'text-muted hover:text-charcoal'
-              }`}
-              style={tab === val ? { background: 'linear-gradient(135deg, #FF6600, #8B0000)' } : {}}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
-        {/* Event cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {filtered.map((ev) => (
-            <div
-              key={ev.id}
-              className="event-card bg-white rounded-2xl overflow-hidden shadow-sm border border-ivory-dark"
-            >
-              {/* Color top bar */}
-              <div
-                className="h-1.5"
-                style={{ background: ev.type === 'upcoming'
-                  ? 'linear-gradient(to right, #FF6600, #8B0000)'
-                  : 'linear-gradient(to right, #8B0000, #5C0000)' }}
-              />
-
-              {/* Image placeholder — replace with <img> when images available */}
-              <div
-                className="h-44 flex items-center justify-center text-white/20 text-5xl relative overflow-hidden"
-                style={{ background: ev.type === 'upcoming'
-                  ? 'linear-gradient(135deg, #8B0000, #FF6600)'
-                  : 'linear-gradient(135deg, #3D0000, #8B0000)' }}
-              >
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1">
-                  <rect x="3" y="4" width="18" height="18" rx="2"/>
-                  <line x1="3" y1="9" x2="21" y2="9"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                </svg>
-                {/* Type badge */}
-                <span
-                  className="absolute top-3 right-3 text-xs font-display font-semibold px-3 py-1 rounded-full"
-                  style={{
-                    background: 'rgba(0,0,0,0.3)',
-                    color: ev.type === 'upcoming' ? '#FF8533' : '#DDD',
-                    backdropFilter: 'blur(4px)',
-                  }}
+          
+          <div className="flex items-center gap-4">
+            <div className="flex gap-1 bg-white border border-gray-200 p-1 rounded-full shadow-sm">
+              {['upcoming', 'past'].map((v) => (
+                <button 
+                  key={v} 
+                  onClick={() => setTab(v)} 
+                  className={`px-5 py-1.5 rounded-full text-xs font-display font-bold transition-all capitalize ${tab === v ? 'bg-crimson text-white' : 'text-muted hover:text-charcoal'}`}
                 >
-                  {ev.type === 'upcoming' ? 'Upcoming' : 'Past'}
-                </span>
-              </div>
-
-              <div className="p-5">
-                <h3
-                  className="font-display font-semibold text-charcoal mb-1"
-                  style={{ fontSize: '1.05rem' }}
-                >
-                  {ev.title}
-                </h3>
-                <p className="text-muted text-xs mb-0.5">📅 {ev.date}</p>
-                <p className="text-muted text-xs mb-3">📍 {ev.location}</p>
-                <p className="text-sm leading-relaxed text-muted">
-                  {ev.desc}
-                </p>
-              </div>
+                  {v}
+                </button>
+              ))}
             </div>
-          ))}
+            <Link to="/events" className="hidden md:flex items-center gap-1 text-crimson font-display font-bold text-sm hover:text-crimson-dark transition-colors group">
+              View All <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </div>
         </div>
+
+        {/* Compact Event Cards */}
+        {filtered.length === 0 ? (
+          <div className="text-center py-10 text-muted font-body">No events found for this category.</div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((ev) => (
+              <div key={ev.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 group flex flex-col">
+                <div className="relative h-48 overflow-hidden bg-gray-200">
+                  <img src={ev.image} alt={ev.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-60" />
+                  
+                  {/* FIXED: Check ev.status for the badge logic */}
+                  <span className={`absolute top-3 right-3 text-[10px] font-display font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-widest ${ev.status === 'upcoming' ? 'bg-crimson text-white' : 'bg-white text-charcoal'}`}>
+                    {ev.status === 'upcoming' ? 'Upcoming' : 'Past'}
+                  </span>
+                </div>
+                
+                <div className="p-5 flex flex-col flex-grow">
+                  <h3 className="font-display font-bold text-lg text-charcoal mb-2 leading-tight group-hover:text-crimson">{ev.title}</h3>
+                  <div className="flex flex-col gap-1.5 mb-3 text-muted">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                      <span className="text-xs font-body font-medium">{ev.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                      <span className="text-xs font-body font-medium">{ev.location}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm font-body leading-snug text-muted flex-grow">{ev.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
-  )
+  );
 }
