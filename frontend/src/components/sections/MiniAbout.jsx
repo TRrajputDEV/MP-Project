@@ -20,8 +20,8 @@ export default function MiniAbout() {
             <div className="grid grid-cols-2 gap-3 w-full h-[320px] md:h-[400px]">
               <div className="col-span-1 h-full rounded-2xl overflow-hidden shadow-md group bg-gray-200">
                 <img
-                  src="https://images.unsplash.com/photo-1593113563332-e147ce10091a?auto=format&fit=crop&q=80&w=800"
-                  alt="Community Service"
+                  src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?auto=format&fit=crop&q=80&w=800"
+                    alt="Community Service"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-// Added placeholder images and updated dates to match realistic upcoming/past scenarios
 const events = [
   { id: 1, title: 'Community Health Camp', date: '2026-07-20', category: 'health', desc: 'Free health check-ups and consultation by certified doctors for underserved communities.', status: 'upcoming', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800' },
   { id: 2, title: 'Tree Plantation Drive', date: '2025-06-10', category: 'environment', desc: '500 saplings planted along the riverbank in collaboration with local schools.', status: 'past', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800' },
@@ -20,7 +20,6 @@ export default function Events() {
     (e) => (tab === 'all' || e.category === tab) && e.status === view
   );
 
-  // Snap to top when navigating to this page
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,7 +37,6 @@ export default function Events() {
             Explore our upcoming initiatives and review the past events that have created a lasting impact in our communities.
           </p>
         </div>
-        {/* Ivory curve at the bottom to transition smoothly into the content */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-1">
           <svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L720 20L1440 60V60H0Z" fill="var(--ivory)"/></svg>
         </div>
@@ -49,16 +47,13 @@ export default function Events() {
         {/* ── Filters & Controls ── */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           
-          {/* Upcoming / Past Toggle */}
           <div className="flex gap-2 bg-white border border-gray-200 p-1.5 rounded-full shadow-sm w-full md:w-auto overflow-x-auto">
             {['upcoming', 'past'].map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
                 className={`px-8 py-2.5 rounded-full text-sm font-display font-bold transition-all duration-300 capitalize whitespace-nowrap ${
-                  view === v
-                    ? 'bg-crimson text-white shadow-md'
-                    : 'text-muted hover:text-charcoal hover:bg-gray-50'
+                  view === v ? 'bg-crimson text-white shadow-md' : 'text-muted hover:text-charcoal hover:bg-gray-50'
                 }`}
               >
                 {v} Events
@@ -66,16 +61,13 @@ export default function Events() {
             ))}
           </div>
 
-          {/* Category Pills */}
           <div className="flex flex-wrap gap-2">
             {cats.map((c) => (
               <button
                 key={c}
                 onClick={() => setTab(c)}
                 className={`px-5 py-2 rounded-full text-xs font-display font-bold uppercase tracking-wider transition-all duration-300 ${
-                  tab === c
-                    ? 'bg-saffron text-white shadow-md'
-                    : 'bg-white border border-gray-200 text-muted hover:border-saffron/50 hover:text-saffron'
+                  tab === c ? 'bg-saffron text-white shadow-md' : 'bg-white border border-gray-200 text-muted hover:border-saffron/50 hover:text-saffron'
                 }`}
               >
                 {c}
@@ -92,40 +84,27 @@ export default function Events() {
             </div>
             <h3 className="font-display text-2xl text-charcoal font-bold mb-2">No Events Found</h3>
             <p className="text-muted font-body">We couldn't find any events matching your selected category.</p>
-            <button 
-              onClick={() => setTab('all')}
-              className="mt-6 text-saffron font-bold font-body hover:text-crimson transition-colors"
-            >
+            <button onClick={() => setTab('all')} className="mt-6 text-saffron font-bold font-body hover:text-crimson transition-colors">
               Clear filters
             </button>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filtered.map((e) => (
-              <div
+              <Link
+                to={`/events/${e.id}`}
                 key={e.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group flex flex-col h-full"
+                className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group flex flex-col h-full cursor-pointer"
               >
-                {/* Image Area */}
                 <div className="relative h-56 overflow-hidden bg-gray-200">
-                  <img 
-                    src={e.image} 
-                    alt={e.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  {/* Subtle dark gradient for better visual weight */}
+                  <img src={e.image} alt={e.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
-                  
-                  {/* Category Badge floated over the image */}
                   <span className="absolute top-4 left-4 text-xs font-display font-bold px-4 py-1.5 rounded-full bg-white/95 text-crimson shadow-sm uppercase tracking-wider backdrop-blur-md">
                     {e.category}
                   </span>
                 </div>
 
-                {/* Content Area */}
                 <div className="p-8 flex flex-col flex-grow">
-                  {/* Date Block */}
                   <div className="flex items-center gap-3 mb-4 text-muted">
                     <svg className="w-4 h-4 text-saffron flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -146,7 +125,7 @@ export default function Events() {
                     {e.desc}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

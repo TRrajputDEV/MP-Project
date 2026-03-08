@@ -33,15 +33,12 @@ const events = [
 
 export default function EventsSection() {
   const [tab, setTab] = useState('upcoming');
-  
-  // FIXED: Filtering by 'status' instead of 'type'
   const filtered = events.filter((e) => e.status === tab);
 
   return (
     <section className="py-12 bg-ivory-dark relative border-y border-gray-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
-        {/* Compact Header & Toggles */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
           <div>
             <div className="w-12 h-1 rounded-full bg-crimson mb-3" />
@@ -66,18 +63,19 @@ export default function EventsSection() {
           </div>
         </div>
 
-        {/* Compact Event Cards */}
         {filtered.length === 0 ? (
           <div className="text-center py-10 text-muted font-body">No events found for this category.</div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((ev) => (
-              <div key={ev.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 group flex flex-col">
+              <Link 
+                to={`/events/${ev.id}`} 
+                key={ev.id} 
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 group flex flex-col cursor-pointer"
+              >
                 <div className="relative h-48 overflow-hidden bg-gray-200">
                   <img src={ev.image} alt={ev.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-60" />
-                  
-                  {/* FIXED: Check ev.status for the badge logic */}
                   <span className={`absolute top-3 right-3 text-[10px] font-display font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-widest ${ev.status === 'upcoming' ? 'bg-crimson text-white' : 'bg-white text-charcoal'}`}>
                     {ev.status === 'upcoming' ? 'Upcoming' : 'Past'}
                   </span>
@@ -87,25 +85,17 @@ export default function EventsSection() {
                   <h3 className="font-display font-bold text-lg text-charcoal mb-2 leading-tight group-hover:text-crimson">{ev.title}</h3>
                   <div className="flex flex-col gap-1.5 mb-3 text-muted">
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                      </svg>
+                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                       <span className="text-xs font-body font-medium">{ev.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                      </svg>
+                      <svg className="w-4 h-4 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                       <span className="text-xs font-body font-medium">{ev.location}</span>
                     </div>
                   </div>
                   <p className="text-sm font-body leading-snug text-muted flex-grow">{ev.desc}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
