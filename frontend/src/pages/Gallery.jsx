@@ -1,125 +1,101 @@
 import { useState } from 'react'
 
-const eventFilters = ['All', 'Annual Gathering', 'Food Drive', 'Culture Fair', 'Workshops', 'Clean-Up Drive']
+const categories = ['all', 'events', 'community', 'nature', 'volunteers']
 
 const photos = [
-  { id: 1, event: 'Annual Gathering', caption: 'Community gathering 2024', span: 'col-span-2' },
-  { id: 2, event: 'Food Drive', caption: 'Volunteers sorting donations', span: '' },
-  { id: 3, event: 'Culture Fair', caption: 'Cultural performances', span: '' },
-  { id: 4, event: 'Workshops', caption: 'Youth workshop session', span: '' },
-  { id: 5, event: 'Food Drive', caption: 'Food distribution day', span: '' },
-  { id: 6, event: 'Annual Gathering', caption: 'Group photo 2024', span: 'row-span-2' },
-  { id: 7, event: 'Clean-Up Drive', caption: 'Riverside clean-up', span: '' },
-  { id: 8, event: 'Culture Fair', caption: 'Art exhibition stalls', span: 'col-span-2' },
-  { id: 9, event: 'Workshops', caption: 'Digital skills training', span: '' },
-  { id: 10, event: 'Annual Gathering', caption: 'Opening ceremony', span: '' },
-  { id: 11, event: 'Clean-Up Drive', caption: 'Before and after', span: '' },
-  { id: 12, event: 'Food Drive', caption: '2000kg milestone!', span: '' },
-]
-
-const gradients = [
-  'linear-gradient(135deg, #1a6b5e, #2a8f7f)',
-  'linear-gradient(135deg, #e8973a, #f5b563)',
-  'linear-gradient(135deg, #0f4a40, #1a6b5e)',
-  'linear-gradient(135deg, #5a4020, #8a6030)',
-  'linear-gradient(135deg, #2a3a5e, #3a5a8f)',
-  'linear-gradient(135deg, #5a1a5e, #8f2a8f)',
+  { id: 1, cat: 'events', title: 'Health Camp 2024', gradient: 'linear-gradient(135deg, #FF6600, #8B0000)' },
+  { id: 2, cat: 'community', title: 'Community Gathering', gradient: 'linear-gradient(135deg, #8B0000, #3D0000)' },
+  { id: 3, cat: 'nature', title: 'Tree Plantation Drive', gradient: 'linear-gradient(135deg, #CC5200, #D4A017)' },
+  { id: 4, cat: 'volunteers', title: 'Volunteer Team', gradient: 'linear-gradient(135deg, #5C0000, #FF6600)' },
+  { id: 5, cat: 'events', title: 'Skill Workshop', gradient: 'linear-gradient(135deg, #D4A017, #CC5200)' },
+  { id: 6, cat: 'community', title: 'Diwali Celebration', gradient: 'linear-gradient(135deg, #FF6600, #D4A017)' },
+  { id: 7, cat: 'nature', title: 'River Cleanup', gradient: 'linear-gradient(135deg, #3D0000, #8B0000)' },
+  { id: 8, cat: 'volunteers', title: 'Training Session', gradient: 'linear-gradient(135deg, #8B0000, #CC5200)' },
+  { id: 9, cat: 'events', title: 'Blood Donation Camp', gradient: 'linear-gradient(135deg, #CC5200, #5C0000)' },
 ]
 
 export default function Gallery() {
-  const [active, setActive] = useState('All')
-  const [lightbox, setLightbox] = useState(null)
+  const [filter, setFilter] = useState('all')
+  const [selected, setSelected] = useState(null)
 
-  const filtered = active === 'All' ? photos : photos.filter((p) => p.event === active)
+  const filtered = filter === 'all' ? photos : photos.filter((p) => p.cat === filter)
 
   return (
-    <div className="min-h-screen bg-cream pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-12">
-          <div style={{ width: 56, height: 3, background: '#e8973a', marginBottom: '0.75rem' }} />
-          <h1 className="font-serif text-5xl text-charcoal mb-3">Gallery</h1>
-          <p className="text-gray-500 text-lg max-w-xl">
-            Moments that define us — captured from events, drives, and gatherings across the years.
-          </p>
+    <div className="min-h-screen bg-ivory">
+      {/* Hero */}
+      <section
+        className="relative py-24 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #3D0000 0%, #8B0000 50%, #CC5200 100%)' }}
+      >
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full opacity-10 border-[50px] border-white" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="section-accent" />
+          <h1 className="font-display text-5xl text-white mb-3">Gallery</h1>
+          <p className="text-white/70 text-lg max-w-xl">Glimpses of our events, initiatives and the vibrant community in action.</p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L720 20L1440 60V60H0Z" fill="#FDF8F0"/></svg>
+        </div>
+      </section>
 
+      <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Filter pills */}
         <div className="flex flex-wrap gap-2 mb-10">
-          {eventFilters.map((f) => (
+          {categories.map((c) => (
             <button
-              key={f}
-              onClick={() => setActive(f)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                active === f
-                  ? 'bg-teal text-white shadow-md'
-                  : 'bg-cream-dark text-gray-600 hover:text-charcoal'
+              key={c}
+              onClick={() => setFilter(c)}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize transition-colors ${
+                filter === c
+                  ? 'bg-saffron text-white'
+                  : 'bg-ivory-dark text-muted hover:bg-saffron/10 hover:text-saffron'
               }`}
             >
-              {f}
+              {c}
             </button>
           ))}
         </div>
 
-        {/* Masonry grid */}
-        <div className="columns-2 md:columns-3 gap-4 space-y-4">
-          {filtered.map((photo, i) => (
-            <div
-              key={photo.id}
-              className="break-inside-avoid cursor-pointer group relative rounded-2xl overflow-hidden shadow-sm"
-              onClick={() => setLightbox(photo)}
+        {/* Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filtered.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => setSelected(p)}
+              className="group relative aspect-[4/3] rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+              style={{ background: p.gradient }}
             >
-              <div
-                className="w-full flex items-center justify-center text-white/30 text-5xl transition-transform duration-300 group-hover:scale-105"
-                style={{
-                  background: gradients[i % gradients.length],
-                  height: (i % 3 === 0) ? '260px' : '180px',
-                }}
-              >
-                🖼️
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <span className="text-xs bg-white/20 text-white backdrop-blur-sm px-3 py-1 rounded-full capitalize">
+                  {p.cat}
+                </span>
+                <h3 className="font-display text-white text-lg mt-2">{p.title}</h3>
               </div>
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end">
-                <div className="p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <p className="text-white text-sm font-medium">{photo.caption}</p>
-                  <p className="text-white/70 text-xs mt-0.5">{photo.event}</p>
-                </div>
-              </div>
-            </div>
+            </button>
           ))}
         </div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-24 text-gray-400">
-            <div className="text-5xl mb-4">🖼️</div>
-            <p>No photos for this event yet.</p>
-          </div>
-        )}
       </div>
 
       {/* Lightbox */}
-      {lightbox && (
+      {selected && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6"
-          onClick={() => setLightbox(null)}
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-6"
+          onClick={() => setSelected(null)}
         >
-          <div
-            className="bg-white rounded-3xl overflow-hidden max-w-2xl w-full shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div
-              className="w-full h-80 flex items-center justify-center text-white/30 text-6xl"
-              style={{ background: gradients[lightbox.id % gradients.length] }}
+          <div className="relative max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="aspect-video" style={{ background: selected.gradient }} />
+            <div className="bg-white p-6">
+              <span className="text-xs bg-saffron/10 text-saffron font-semibold px-3 py-1 rounded-full capitalize">{selected.cat}</span>
+              <h3 className="font-display text-2xl text-charcoal mt-3">{selected.title}</h3>
+              <p className="text-muted text-sm mt-2">Photos will be uploaded here. This is a placeholder view.</p>
+            </div>
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 text-white text-lg flex items-center justify-center hover:bg-black/70"
             >
-              🖼️
-            </div>
-            <div className="p-6 flex items-start justify-between">
-              <div>
-                <p className="font-serif text-xl text-charcoal">{lightbox.caption}</p>
-                <p className="text-gray-500 text-sm mt-1">{lightbox.event}</p>
-              </div>
-              <button onClick={() => setLightbox(null)} className="text-gray-400 hover:text-charcoal text-2xl">✕</button>
-            </div>
+              &times;
+            </button>
           </div>
         </div>
       )}

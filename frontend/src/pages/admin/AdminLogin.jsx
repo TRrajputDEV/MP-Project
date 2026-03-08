@@ -2,85 +2,89 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function AdminLogin() {
-  const [form, setForm] = useState({ email: '', password: '' })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
-    // TODO: connect to /api/auth/login
+    setLoading(true)
     await new Promise((r) => setTimeout(r, 800))
-    if (form.email === 'admin@cc.org' && form.password === 'admin123') {
-      localStorage.setItem('admin_token', 'demo_token')
-      navigate('/admin')
+
+    if (email === 'admin@mpsevasamiti.org' && password === 'admin123') {
+      localStorage.setItem('admin_token', 'demo-token')
+      navigate('/admin/dashboard')
     } else {
-      setError('Invalid credentials. Try admin@cc.org / admin123')
+      setError('Invalid credentials. Please try again.')
     }
     setLoading(false)
   }
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center grain"
-      style={{ background: 'linear-gradient(135deg, #0f4a40 0%, #1a6b5e 100%)' }}
+      className="min-h-screen flex items-center justify-center p-6"
+      style={{ background: 'linear-gradient(135deg, #3D0000 0%, #8B0000 50%, #CC5200 100%)' }}
     >
-      <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md mx-6">
-        {/* Logo */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-full bg-teal flex items-center justify-center">
-            <span className="text-white font-serif font-bold text-lg">C</span>
+      <div className="w-full max-w-md">
+        {/* Logo / Branding */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FF6600, #D4A017)' }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <div>
-            <p className="font-serif font-semibold text-charcoal">CommunityConnect</p>
-            <p className="text-xs text-gray-400">Admin Dashboard</p>
-          </div>
+          <h1 className="font-display text-3xl text-white">Admin Panel</h1>
+          <p className="text-white/60 text-sm mt-1">Maharana Pratap Seva Samiti</p>
         </div>
 
-        <h1 className="font-serif text-3xl text-charcoal mb-2">Welcome back</h1>
-        <p className="text-gray-500 text-sm mb-7">Sign in to manage your community</p>
+        {/* Card */}
+        <div className="bg-white rounded-3xl p-8 shadow-2xl">
+          <h2 className="font-display text-xl text-charcoal mb-6 text-center">Sign In</h2>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl mb-5">
-            {error}
-          </div>
-        )}
+          {error && (
+            <div className="mb-4 bg-crimson/10 text-crimson text-sm rounded-xl px-4 py-3">
+              {error}
+            </div>
+          )}
 
-        <div className="space-y-4">
-          <div>
-            <label className="text-xs text-gray-400 uppercase tracking-wide block mb-1.5">Email</label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="admin@communityconnect.org"
-              className="w-full border border-cream-dark rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal transition-colors bg-cream"
-            />
-          </div>
-          <div>
-            <label className="text-xs text-gray-400 uppercase tracking-wide block mb-1.5">Password</label>
-            <input
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              placeholder="••••••••"
-              className="w-full border border-cream-dark rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal transition-colors bg-cream"
-            />
-          </div>
-          <button
-            onClick={handleSubmit}
-            disabled={loading || !form.email || !form.password}
-            className="w-full bg-teal hover:bg-teal-light text-white font-semibold py-3.5 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Signing in...' : 'Sign In →'}
-          </button>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="text-xs text-muted uppercase tracking-wide block mb-1.5">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@mpsevasamiti.org"
+                required
+                className="w-full border border-ivory-dark rounded-xl px-4 py-3 text-sm text-charcoal bg-ivory focus:outline-none focus:border-saffron transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted uppercase tracking-wide block mb-1.5">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+                required
+                className="w-full border border-ivory-dark rounded-xl px-4 py-3 text-sm text-charcoal bg-ivory focus:outline-none focus:border-saffron transition-colors"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full text-white font-display font-semibold py-3.5 rounded-xl transition-all disabled:opacity-50 hover:scale-[1.01]"
+              style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <p className="text-muted text-xs text-center mt-5">
+            Demo: admin@mpsevasamiti.org / admin123
+          </p>
         </div>
-
-        <p className="text-center text-xs text-gray-400 mt-6">
-          Demo: admin@cc.org / admin123
-        </p>
       </div>
     </div>
   )

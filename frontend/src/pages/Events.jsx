@@ -1,99 +1,101 @@
 import { useState } from 'react'
 
-const allEvents = [
-  { id: 1, title: 'Annual Community Gathering', date: '2025-04-15', location: 'City Park, Main Ground', type: 'upcoming', desc: 'Our flagship annual event bringing hundreds of community members together for a day of activities, sharing, and connection.', tags: ['Community', 'Family'] },
-  { id: 2, title: 'Youth Leadership Workshop', date: '2025-03-28', location: 'Community Hall, Block B', type: 'upcoming', desc: 'A hands-on workshop empowering young voices with the skills to lead positive change in their neighbourhoods.', tags: ['Youth', 'Workshop'] },
-  { id: 3, title: 'Spring Clean-Up Drive', date: '2025-03-10', location: 'Riverside Park', type: 'upcoming', desc: 'Join us as we clean up our local park and green spaces to make the city a better place for everyone.', tags: ['Environment', 'Volunteering'] },
-  { id: 4, title: 'Winter Food Drive', date: '2024-12-10', location: 'District Centre', type: 'past', desc: 'Together we collected over 2,000 kg of food for families in need — a testament to what our community can achieve.', tags: ['Charity', 'Food'] },
-  { id: 5, title: 'Culture & Heritage Fair', date: '2024-11-20', location: 'Town Square', type: 'past', desc: 'A vibrant celebration of our diverse cultural roots with performances, food stalls, and art exhibitions.', tags: ['Culture', 'Art'] },
-  { id: 6, title: 'Digital Skills Bootcamp', date: '2024-10-05', location: 'Public Library, 2nd Floor', type: 'past', desc: 'We equipped 150+ community members with essential digital skills to thrive in the modern economy.', tags: ['Education', 'Tech'] },
-  { id: 7, title: 'Tree Plantation Drive', date: '2024-08-15', location: 'Northern Boulevard', type: 'past', desc: 'We planted 500 saplings across the city to contribute to a greener, healthier environment.', tags: ['Environment'] },
+const events = [
+  { id: 1, title: 'Community Health Camp', date: '2024-07-20', category: 'health', desc: 'Free health check-ups and consultation by certified doctors for underserved communities.', status: 'upcoming' },
+  { id: 2, title: 'Tree Plantation Drive', date: '2024-06-10', category: 'environment', desc: '500 saplings planted along the riverbank in collaboration with local schools.', status: 'past' },
+  { id: 3, title: 'Youth Skill Workshop', date: '2024-08-15', category: 'education', desc: 'Digital literacy and communication skills training for rural youth.', status: 'upcoming' },
+  { id: 4, title: 'Diwali Food Distribution', date: '2023-11-12', category: 'food', desc: 'Distributed 2,000 meal packets across 6 localities during the festive season.', status: 'past' },
+  { id: 5, title: 'Blood Donation Camp', date: '2024-05-01', category: 'health', desc: 'Over 120 units of blood collected in partnership with local hospitals.', status: 'past' },
+  { id: 6, title: 'Clean River Campaign', date: '2024-09-05', category: 'environment', desc: 'A 3-day clean-up campaign to restore the local river ecosystem.', status: 'upcoming' },
 ]
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-}
+const cats = ['all', 'health', 'environment', 'education', 'food']
 
 export default function Events() {
-  const [tab, setTab] = useState('upcoming')
+  const [tab, setTab] = useState('all')
+  const [view, setView] = useState('upcoming')
 
-  const filtered = allEvents.filter((e) => e.type === tab)
+  const filtered = events.filter(
+    (e) => (tab === 'all' || e.category === tab) && e.status === view
+  )
 
   return (
-    <div className="min-h-screen bg-cream pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-12">
-          <div style={{ width: 56, height: 3, background: '#e8973a', marginBottom: '0.75rem' }} />
-          <h1 className="font-serif text-5xl text-charcoal mb-3">Our Events</h1>
-          <p className="text-gray-500 text-lg max-w-xl">
-            From workshops to drives, every event is an opportunity to connect, contribute, and grow together.
-          </p>
+    <div className="min-h-screen bg-ivory">
+      {/* Hero */}
+      <section
+        className="relative py-24 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #3D0000 0%, #8B0000 50%, #CC5200 100%)' }}
+      >
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full opacity-10 border-[50px] border-white" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="section-accent" />
+          <h1 className="font-display text-5xl text-white mb-3">Events</h1>
+          <p className="text-white/70 text-lg max-w-xl">Explore our upcoming drives and past initiatives that have made a difference.</p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L720 20L1440 60V60H0Z" fill="#FDF8F0"/></svg>
+        </div>
+      </section>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-10 bg-cream-dark w-fit p-1 rounded-full">
-          {['upcoming', 'past'].map((t) => (
+      <div className="max-w-5xl mx-auto px-6 py-16">
+        {/* Toggle upcoming / past */}
+        <div className="flex gap-3 mb-8">
+          {['upcoming', 'past'].map((v) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all capitalize ${
-                tab === t
-                  ? 'bg-teal text-white shadow-md'
-                  : 'text-gray-500 hover:text-charcoal'
+              key={v}
+              onClick={() => setView(v)}
+              className={`px-5 py-2 rounded-full text-sm font-display font-semibold transition-all capitalize ${
+                view === v
+                  ? 'text-white shadow-md'
+                  : 'bg-ivory-dark text-muted hover:bg-ivory-dark/80'
               }`}
+              style={view === v ? { background: 'linear-gradient(135deg, #FF6600, #8B0000)' } : {}}
             >
-              {t} Events
+              {v}
             </button>
           ))}
         </div>
 
-        {/* Events grid */}
+        {/* Category pills */}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {cats.map((c) => (
+            <button
+              key={c}
+              onClick={() => setTab(c)}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize transition-colors ${
+                tab === c
+                  ? 'bg-saffron text-white'
+                  : 'bg-ivory-dark text-muted hover:bg-saffron/10 hover:text-saffron'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Event cards */}
         {filtered.length === 0 ? (
-          <div className="text-center py-24 text-gray-400">
-            <div className="text-5xl mb-4">📅</div>
-            <p>No {tab} events at the moment. Check back soon!</p>
-          </div>
+          <div className="text-center py-20 text-muted">No events found for this filter.</div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((event) => (
-              <div key={event.id} className="event-card bg-white rounded-2xl overflow-hidden shadow-sm border border-cream-dark">
-                {/* Top color bar */}
-                <div
-                  className="h-1.5"
-                  style={{ background: tab === 'upcoming' ? '#1a6b5e' : '#8a6030' }}
-                />
-
-                {/* Image placeholder */}
-                <div
-                  className="h-44 flex items-center justify-center text-white/40 text-4xl"
-                  style={{
-                    background: tab === 'upcoming'
-                      ? 'linear-gradient(135deg, #1a6b5e, #2a8f7f)'
-                      : 'linear-gradient(135deg, #5a4020, #8a6030)',
-                  }}
-                >
-                  📸
-                </div>
-
+          <div className="grid md:grid-cols-2 gap-6">
+            {filtered.map((e) => (
+              <div
+                key={e.id}
+                className="bg-white border border-ivory-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Gradient top bar */}
+                <div className="h-1.5" style={{ background: 'linear-gradient(90deg, #FF6600, #8B0000)' }} />
                 <div className="p-6">
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {event.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2.5 py-0.5 rounded-full font-medium"
-                        style={{ background: '#e8f5f2', color: '#1a6b5e' }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs bg-saffron/10 text-saffron font-semibold px-3 py-1 rounded-full capitalize">
+                      {e.category}
+                    </span>
+                    <span className="text-xs text-muted">
+                      {new Date(e.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </span>
                   </div>
-
-                  <h3 className="font-serif text-xl mb-2">{event.title}</h3>
-                  <p className="text-gray-500 text-sm mb-1">📅 {formatDate(event.date)}</p>
-                  <p className="text-gray-500 text-sm mb-4">📍 {event.location}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed">{event.desc}</p>
+                  <h3 className="font-display text-xl text-charcoal mb-2">{e.title}</h3>
+                  <p className="text-muted text-sm leading-relaxed">{e.desc}</p>
                 </div>
               </div>
             ))}

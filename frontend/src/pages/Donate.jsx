@@ -1,131 +1,142 @@
 import { useState } from 'react'
 
 const impactItems = [
-  { amount: '₹500',  impact: 'Provides stationery for 10 children for a month' },
-  { amount: '₹1,000', impact: 'Feeds a family of 4 for a week' },
-  { amount: '₹2,500', impact: 'Supports one community workshop session' },
-  { amount: '₹5,000', impact: 'Plants 50 trees in your name' },
+  { amount: '500', label: 'Feeds a family for a week' },
+  { amount: '1,000', label: 'Plants 10 trees with care kits' },
+  { amount: '2,500', label: 'Sponsors a student for one month' },
+  { amount: '5,000', label: 'Funds a full community health camp' },
 ]
 
 export default function Donate() {
-  const [copied, setCopied] = useState('')
-
-  const copy = (text, label) => {
-    navigator.clipboard.writeText(text)
-    setCopied(label)
-    setTimeout(() => setCopied(''), 2000)
-  }
+  const [amount, setAmount] = useState('')
+  const presets = [500, 1000, 2500, 5000, 10000]
 
   return (
-    <div className="min-h-screen bg-cream pt-28 pb-20">
-      <div className="max-w-5xl mx-auto px-6">
-
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div style={{ width: 56, height: 3, background: '#e8973a', margin: '0 auto 1rem' }} />
-          <h1 className="font-serif text-5xl text-charcoal mb-4">Support Our Cause</h1>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Your generosity fuels every event, every drive, every smile. 100% of donations go directly to community initiatives.
-          </p>
+    <div className="min-h-screen bg-ivory">
+      {/* Hero */}
+      <section
+        className="relative py-24 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #3D0000 0%, #8B0000 50%, #CC5200 100%)' }}
+      >
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full opacity-10 border-[50px] border-white" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="section-accent" />
+          <h1 className="font-display text-5xl text-white mb-3">Support Our Mission</h1>
+          <p className="text-white/70 text-lg max-w-xl">Every contribution, no matter how small, creates lasting change in communities that need it most.</p>
         </div>
-
-        {/* Impact section */}
-        <div className="mb-16">
-          <h2 className="font-serif text-3xl text-charcoal mb-8 text-center">Your Donation, Their Impact</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {impactItems.map(({ amount, impact }) => (
-              <div key={amount} className="bg-white border border-cream-dark rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="font-serif text-3xl text-teal font-bold mb-3">{amount}</div>
-                <p className="text-gray-600 text-sm leading-relaxed">{impact}</p>
-              </div>
-            ))}
-          </div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L720 20L1440 60V60H0Z" fill="#FDF8F0"/></svg>
         </div>
+      </section>
 
-        {/* Payment details */}
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="max-w-5xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-2 gap-12">
 
-          {/* Bank Transfer */}
-          <div className="bg-white border border-cream-dark rounded-3xl p-8 shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-teal/10 rounded-xl flex items-center justify-center text-teal text-xl">🏦</div>
-              <h3 className="font-serif text-2xl text-charcoal">Bank Transfer</h3>
-            </div>
+          {/* Donation Form */}
+          <div className="bg-white border border-ivory-dark rounded-3xl p-8 shadow-sm">
+            <h3 className="font-display text-2xl text-charcoal mb-6">Make a Donation</h3>
 
-            {[
-              { label: 'Account Name', value: 'CommunityConnect Trust' },
-              { label: 'Account Number', value: '1234 5678 9012' },
-              { label: 'IFSC Code', value: 'SBIN0001234' },
-              { label: 'Bank', value: 'State Bank of India' },
-              { label: 'Branch', value: 'Main Branch, Your City' },
-            ].map(({ label, value }) => (
-              <div key={label} className="flex items-center justify-between py-3 border-b border-cream-dark last:border-0">
-                <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide">{label}</p>
-                  <p className="font-medium text-charcoal">{value}</p>
-                </div>
+            {/* Preset amounts */}
+            <p className="text-xs text-muted uppercase tracking-wide mb-3">Select Amount</p>
+            <div className="grid grid-cols-3 gap-3 mb-5">
+              {presets.map((p) => (
                 <button
-                  onClick={() => copy(value, label)}
-                  className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all ${
-                    copied === label
-                      ? 'bg-teal text-white'
-                      : 'bg-cream-dark text-gray-500 hover:text-teal'
+                  key={p}
+                  onClick={() => setAmount(String(p))}
+                  className={`py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                    amount === String(p)
+                      ? 'text-white shadow-md'
+                      : 'bg-ivory-dark text-charcoal hover:bg-saffron/10'
                   }`}
+                  style={amount === String(p) ? { background: 'linear-gradient(135deg, #FF6600, #8B0000)' } : {}}
                 >
-                  {copied === label ? '✓ Copied' : 'Copy'}
+                  {'\u20B9'}{p.toLocaleString()}
                 </button>
-              </div>
-            ))}
-          </div>
-
-          {/* UPI / QR */}
-          <div className="bg-white border border-cream-dark rounded-3xl p-8 shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-amber/10 rounded-xl flex items-center justify-center text-amber text-xl">📱</div>
-              <h3 className="font-serif text-2xl text-charcoal">UPI / QR Code</h3>
-            </div>
-
-            {/* QR placeholder */}
-            <div className="w-48 h-48 bg-cream-dark rounded-2xl mx-auto flex items-center justify-center mb-5 border-2 border-dashed border-cream-dark">
-              <div className="text-center text-gray-400">
-                <div className="text-4xl mb-2">⬛</div>
-                <p className="text-xs">QR Code</p>
-                <p className="text-xs">will appear here</p>
+              ))}
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm">{'\u20B9'}</span>
+                <input
+                  type="number"
+                  value={presets.includes(Number(amount)) ? '' : amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="Other"
+                  className="w-full py-2.5 pl-7 pr-3 rounded-xl text-sm bg-ivory border border-ivory-dark focus:border-saffron focus:outline-none transition-colors"
+                />
               </div>
             </div>
 
-            <div className="bg-cream rounded-xl p-4 flex items-center justify-between">
+            {/* Donor info */}
+            <div className="space-y-4 mb-6">
               <div>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">UPI ID</p>
-                <p className="font-medium text-charcoal">communityconnect@sbi</p>
+                <label className="text-xs text-muted uppercase tracking-wide block mb-1.5">Full Name</label>
+                <input placeholder="Your name" className="w-full border border-ivory-dark rounded-xl px-4 py-3 text-sm text-charcoal bg-ivory focus:outline-none focus:border-saffron transition-colors" />
               </div>
-              <button
-                onClick={() => copy('communityconnect@sbi', 'UPI')}
-                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all ${
-                  copied === 'UPI' ? 'bg-teal text-white' : 'bg-cream-dark text-gray-500 hover:text-teal'
-                }`}
-              >
-                {copied === 'UPI' ? '✓ Copied' : 'Copy'}
-              </button>
+              <div>
+                <label className="text-xs text-muted uppercase tracking-wide block mb-1.5">Email</label>
+                <input type="email" placeholder="you@example.com" className="w-full border border-ivory-dark rounded-xl px-4 py-3 text-sm text-charcoal bg-ivory focus:outline-none focus:border-saffron transition-colors" />
+              </div>
+              <div>
+                <label className="text-xs text-muted uppercase tracking-wide block mb-1.5">Phone (Optional)</label>
+                <input placeholder="+91 98765 43210" className="w-full border border-ivory-dark rounded-xl px-4 py-3 text-sm text-charcoal bg-ivory focus:outline-none focus:border-saffron transition-colors" />
+              </div>
             </div>
 
-            <p className="text-gray-500 text-xs text-center mt-4 leading-relaxed">
-              Scan the QR or copy the UPI ID to pay via any UPI app — Google Pay, PhonePe, Paytm, BHIM
-            </p>
+            <button
+              disabled={!amount}
+              className="w-full text-white font-display font-semibold py-3.5 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01]"
+              style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}
+            >
+              Donate {amount ? `\u20B9${Number(amount).toLocaleString()}` : ''} {'\u2192'}
+            </button>
           </div>
-        </div>
 
-        {/* Transparency note */}
-        <div
-          className="mt-12 rounded-3xl p-8 text-white text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #1a6b5e, #0f4a40)' }}
-        >
-          <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
-          <div className="text-3xl mb-3">🤝</div>
-          <h3 className="font-serif text-2xl mb-3">100% Transparent</h3>
-          <p className="text-white/75 max-w-xl mx-auto text-sm leading-relaxed">
-            Every rupee donated is accounted for. We publish annual reports on how funds are used. Our community always knows exactly where the money goes.
-          </p>
+          {/* Impact + Bank Details */}
+          <div className="space-y-8">
+            {/* Impact cards */}
+            <div>
+              <div className="section-accent" />
+              <h3 className="font-display text-2xl text-charcoal mb-5">Your Impact</h3>
+              <div className="space-y-3">
+                {impactItems.map(({ amount: a, label }) => (
+                  <div key={a} className="flex items-center gap-4 bg-white border border-ivory-dark rounded-xl p-4 shadow-sm">
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-display font-bold text-xs flex-shrink-0"
+                      style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}
+                    >
+                      {'\u20B9'}{a}
+                    </div>
+                    <p className="text-muted text-sm">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bank details */}
+            <div className="bg-ivory-dark rounded-2xl p-6">
+              <h4 className="font-display text-lg text-charcoal mb-4">Bank Transfer Details</h4>
+              <div className="space-y-2 text-sm">
+                {[
+                  ['Account Name', 'Maharana Pratap Seva Samiti'],
+                  ['Account Number', '1234 5678 9012'],
+                  ['IFSC Code', 'SBIN0001234'],
+                  ['Bank', 'State Bank of India'],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex justify-between">
+                    <span className="text-muted">{k}</span>
+                    <span className="text-charcoal font-medium">{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Transparency */}
+            <div className="bg-white border border-ivory-dark rounded-2xl p-6 shadow-sm">
+              <h4 className="font-display text-lg text-charcoal mb-2">100% Transparent</h4>
+              <p className="text-muted text-sm leading-relaxed">
+                Every rupee is accounted for. We publish quarterly reports detailing exactly how donations are utilised across our programs.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

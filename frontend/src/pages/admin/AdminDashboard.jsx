@@ -1,104 +1,67 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const sidebarItems = [
-  { id: 'overview',  icon: '📊', label: 'Overview' },
-  { id: 'events',    icon: '📅', label: 'Events' },
-  { id: 'gallery',   icon: '🖼️',  label: 'Gallery' },
-  { id: 'team',      icon: '👥', label: 'Team' },
-  { id: 'messages',  icon: '💬', label: 'Messages' },
-]
+const navItems = ['Overview', 'Events', 'Gallery', 'Team', 'Messages']
 
-// ── Sub-panels ────────────────────────────────────────────────
-function Overview() {
+/* ─── Sub-panels ─── */
+function OverviewPanel() {
   const stats = [
-    { label: 'Total Events', value: '83', change: '+3 this month', color: '#1a6b5e' },
-    { label: 'Gallery Photos', value: '247', change: '+12 this week', color: '#e8973a' },
-    { label: 'Messages', value: '14', change: '3 unread', color: '#5a4020' },
-    { label: 'Team Members', value: '6', change: 'All active', color: '#2a3a5e' },
+    { label: 'Total Events', value: '82', icon: '\u{1F4C5}' },
+    { label: 'Active Members', value: '534', icon: '\u{1F465}' },
+    { label: 'Cities', value: '12', icon: '\u{1F4CD}' },
+    { label: 'Donations', value: '\u20B92.4L', icon: '\u{1F4B0}' },
   ]
   return (
     <div>
-      <h2 className="font-serif text-3xl text-charcoal mb-8">Dashboard Overview</h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        {stats.map(({ label, value, change, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 shadow-sm border border-cream-dark">
-            <div className="w-2 h-8 rounded-full mb-4" style={{ background: color }} />
-            <p className="font-serif text-3xl font-bold text-charcoal">{value}</p>
-            <p className="text-gray-500 text-sm mt-1">{label}</p>
-            <p className="text-xs text-gray-400 mt-1">{change}</p>
+      <h2 className="font-display text-2xl text-charcoal mb-6">Dashboard Overview</h2>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        {stats.map(({ label, value, icon }) => (
+          <div key={label} className="bg-white border border-ivory-dark rounded-2xl p-5 shadow-sm">
+            <div className="text-2xl mb-2">{icon}</div>
+            <p className="text-3xl font-display font-bold text-charcoal">{value}</p>
+            <p className="text-muted text-sm mt-1">{label}</p>
           </div>
         ))}
       </div>
-      <div className="bg-amber/10 border border-amber/30 rounded-2xl p-6">
-        <h3 className="font-semibold text-charcoal mb-2">🚧 Backend Integration Pending</h3>
-        <p className="text-gray-600 text-sm">This dashboard is currently showing static demo data. Once the Express + MongoDB backend is connected, all data will be live and editable.</p>
+      <div className="bg-white border border-ivory-dark rounded-2xl p-6 shadow-sm">
+        <h3 className="font-display text-lg text-charcoal mb-3">Recent Activity</h3>
+        <div className="space-y-3">
+          {['New volunteer signup: Priya S.', 'Event published: Community Health Camp', 'Donation received: \u20B95,000', 'Gallery updated: 8 new photos'].map((a, i) => (
+            <div key={i} className="flex items-center gap-3 text-sm">
+              <div className="w-2 h-2 rounded-full bg-saffron flex-shrink-0" />
+              <p className="text-muted">{a}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
 function EventsPanel() {
-  const [events, setEvents] = useState([
-    { id: 1, title: 'Annual Community Gathering', date: '2025-04-15', type: 'upcoming', location: 'City Park' },
-    { id: 2, title: 'Youth Leadership Workshop', date: '2025-03-28', type: 'upcoming', location: 'Community Hall' },
-    { id: 3, title: 'Winter Food Drive', date: '2024-12-10', type: 'past', location: 'District Centre' },
-  ])
-  const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ title: '', date: '', type: 'upcoming', location: '', desc: '' })
-
-  const addEvent = () => {
-    if (!form.title) return
-    setEvents([...events, { ...form, id: Date.now() }])
-    setForm({ title: '', date: '', type: 'upcoming', location: '', desc: '' })
-    setShowForm(false)
-  }
-
+  const events = [
+    { title: 'Community Health Camp', date: '2024-07-20', status: 'upcoming' },
+    { title: 'Tree Plantation Drive', date: '2024-06-10', status: 'past' },
+    { title: 'Youth Skill Workshop', date: '2024-08-15', status: 'upcoming' },
+  ]
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-serif text-3xl text-charcoal">Events Manager</h2>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-teal text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-teal-light transition-colors"
-        >
-          + Add Event
+        <h2 className="font-display text-2xl text-charcoal">Manage Events</h2>
+        <button className="text-white text-sm font-display font-semibold px-5 py-2 rounded-xl hover:scale-[1.02] transition-transform" style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}>
+          + New Event
         </button>
       </div>
-
-      {showForm && (
-        <div className="bg-white border border-cream-dark rounded-2xl p-6 mb-6 shadow-sm">
-          <h3 className="font-semibold text-charcoal mb-4">New Event</h3>
-          <div className="grid sm:grid-cols-2 gap-4 mb-4">
-            <input placeholder="Event title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream" />
-            <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream" />
-            <input placeholder="Location" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream" />
-            <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream">
-              <option value="upcoming">Upcoming</option>
-              <option value="past">Past</option>
-            </select>
-          </div>
-          <textarea placeholder="Description" value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} rows={3} className="w-full border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream resize-none mb-4" />
-          <div className="flex gap-3">
-            <button onClick={addEvent} className="bg-teal text-white text-sm px-5 py-2 rounded-xl hover:bg-teal-light transition-colors">Save Event</button>
-            <button onClick={() => setShowForm(false)} className="bg-cream-dark text-gray-500 text-sm px-5 py-2 rounded-xl hover:text-charcoal transition-colors">Cancel</button>
-          </div>
-        </div>
-      )}
-
       <div className="space-y-3">
-        {events.map((ev) => (
-          <div key={ev.id} className="bg-white border border-cream-dark rounded-xl p-4 shadow-sm flex items-center justify-between">
+        {events.map((e) => (
+          <div key={e.title} className="bg-white border border-ivory-dark rounded-xl p-4 shadow-sm flex items-center justify-between">
             <div>
-              <p className="font-medium text-charcoal text-sm">{ev.title}</p>
-              <p className="text-xs text-gray-400">{ev.date} · {ev.location}</p>
+              <h3 className="font-display text-charcoal">{e.title}</h3>
+              <p className="text-muted text-xs">{e.date}</p>
             </div>
-            <div className="flex items-center gap-3">
-              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${ev.type === 'upcoming' ? 'bg-teal/10 text-teal' : 'bg-amber/10 text-amber'}`}>
-                {ev.type}
-              </span>
-              <button onClick={() => setEvents(events.filter((e) => e.id !== ev.id))} className="text-red-400 hover:text-red-600 text-xs">Delete</button>
-            </div>
+            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${e.status === 'upcoming' ? 'bg-saffron/10 text-saffron' : 'bg-ivory-dark text-muted'}`}>
+              {e.status}
+            </span>
           </div>
         ))}
       </div>
@@ -110,59 +73,44 @@ function GalleryPanel() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-serif text-3xl text-charcoal">Gallery Manager</h2>
-        <button className="bg-teal text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-teal-light transition-colors">
+        <h2 className="font-display text-2xl text-charcoal">Manage Gallery</h2>
+        <button className="text-white text-sm font-display font-semibold px-5 py-2 rounded-xl hover:scale-[1.02] transition-transform" style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}>
           + Upload Photos
         </button>
       </div>
-      <div className="bg-cream-dark rounded-2xl border-2 border-dashed border-gray-300 p-16 text-center text-gray-400">
-        <div className="text-5xl mb-4">📸</div>
-        <p className="font-medium">Drag & drop photos here</p>
-        <p className="text-sm mt-1">or click Upload Photos to browse</p>
-        <p className="text-xs mt-3 text-gray-300">Backend upload integration coming soon</p>
+      <div className="grid sm:grid-cols-3 gap-4">
+        {[1,2,3,4,5,6].map((i) => (
+          <div key={i} className="aspect-square rounded-2xl relative overflow-hidden shadow-sm" style={{ background: `linear-gradient(135deg, ${i%2===0?'#FF6600':'#8B0000'}, ${i%2===0?'#8B0000':'#CC5200'})` }}>
+            <div className="absolute inset-0 flex items-center justify-center text-white/40 text-sm font-display">Photo {i}</div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
 function TeamPanel() {
-  const [team, setTeam] = useState([
-    { id: 1, name: 'Arjun Mehta', role: 'Founder & Lead Organizer' },
-    { id: 2, name: 'Priya Sharma', role: 'Events Coordinator' },
-    { id: 3, name: 'Rohit Verma', role: 'Community Manager' },
-  ])
-  const [form, setForm] = useState({ name: '', role: '' })
-
-  const add = () => {
-    if (!form.name) return
-    setTeam([...team, { ...form, id: Date.now() }])
-    setForm({ name: '', role: '' })
-  }
-
+  const members = [
+    { name: 'Arjun Mehta', role: 'Founder', initials: 'AM' },
+    { name: 'Priya Sharma', role: 'Events', initials: 'PS' },
+    { name: 'Rohit Verma', role: 'Community', initials: 'RV' },
+  ]
   return (
     <div>
-      <h2 className="font-serif text-3xl text-charcoal mb-6">Team Manager</h2>
-      <div className="bg-white border border-cream-dark rounded-2xl p-6 mb-6 shadow-sm">
-        <h3 className="font-semibold text-charcoal mb-4">Add Team Member</h3>
-        <div className="flex gap-3">
-          <input placeholder="Full name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="flex-1 border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream" />
-          <input placeholder="Role / Title" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="flex-1 border border-cream-dark rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-teal bg-cream" />
-          <button onClick={add} className="bg-teal text-white text-sm px-5 py-2.5 rounded-xl hover:bg-teal-light transition-colors whitespace-nowrap">Add</button>
-        </div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="font-display text-2xl text-charcoal">Team Members</h2>
+        <button className="text-white text-sm font-display font-semibold px-5 py-2 rounded-xl hover:scale-[1.02] transition-transform" style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}>
+          + Add Member
+        </button>
       </div>
       <div className="space-y-3">
-        {team.map((m) => (
-          <div key={m.id} className="bg-white border border-cream-dark rounded-xl p-4 flex items-center justify-between shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-teal text-white flex items-center justify-center text-sm font-bold">
-                {m.name.split(' ').map((n) => n[0]).join('')}
-              </div>
-              <div>
-                <p className="font-medium text-charcoal text-sm">{m.name}</p>
-                <p className="text-xs text-gray-400">{m.role}</p>
-              </div>
+        {members.map((m) => (
+          <div key={m.name} className="bg-white border border-ivory-dark rounded-xl p-4 shadow-sm flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-display font-bold text-sm" style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}>{m.initials}</div>
+            <div>
+              <h3 className="font-display text-charcoal">{m.name}</h3>
+              <p className="text-muted text-xs">{m.role}</p>
             </div>
-            <button onClick={() => setTeam(team.filter((t) => t.id !== m.id))} className="text-red-400 hover:text-red-600 text-xs">Remove</button>
           </div>
         ))}
       </div>
@@ -171,29 +119,22 @@ function TeamPanel() {
 }
 
 function MessagesPanel() {
-  const messages = [
-    { id: 1, name: 'Rahul Kumar', email: 'rahul@email.com', subject: 'Volunteering inquiry', message: 'Hi, I would love to volunteer at your next event...', read: false, date: '2025-03-05' },
-    { id: 2, name: 'Sunita Patel', email: 'sunita@email.com', subject: 'Donation receipt request', message: 'Could you please send me a receipt for my donation of ₹2000...', read: false, date: '2025-03-04' },
-    { id: 3, name: 'Deepak Joshi', email: 'deepak@email.com', subject: 'Partnership proposal', message: 'Our company would like to sponsor your upcoming events...', read: true, date: '2025-03-01' },
+  const msgs = [
+    { from: 'Rahul K.', subject: 'Volunteer inquiry', time: '2 hours ago' },
+    { from: 'Meera J.', subject: 'Donation receipt', time: '1 day ago' },
+    { from: 'Amit S.', subject: 'Event partnership', time: '3 days ago' },
   ]
-
   return (
     <div>
-      <h2 className="font-serif text-3xl text-charcoal mb-6">Messages</h2>
+      <h2 className="font-display text-2xl text-charcoal mb-6">Messages</h2>
       <div className="space-y-3">
-        {messages.map((m) => (
-          <div key={m.id} className={`bg-white border rounded-xl p-5 shadow-sm ${!m.read ? 'border-teal/30' : 'border-cream-dark'}`}>
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <div className="flex items-center gap-2">
-                  <p className="font-semibold text-charcoal text-sm">{m.name}</p>
-                  {!m.read && <span className="w-2 h-2 rounded-full bg-teal" />}
-                </div>
-                <p className="text-xs text-gray-400">{m.email} · {m.date}</p>
-              </div>
-              <p className="text-xs font-medium text-gray-500 bg-cream px-3 py-1 rounded-full">{m.subject}</p>
+        {msgs.map((m) => (
+          <div key={m.from} className="bg-white border border-ivory-dark rounded-xl p-4 shadow-sm flex items-center justify-between">
+            <div>
+              <h3 className="font-display text-charcoal text-sm">{m.from}</h3>
+              <p className="text-muted text-xs">{m.subject}</p>
             </div>
-            <p className="text-gray-600 text-sm">{m.message}</p>
+            <span className="text-muted text-xs">{m.time}</span>
           </div>
         ))}
       </div>
@@ -201,63 +142,68 @@ function MessagesPanel() {
   )
 }
 
-// ── Main Dashboard ─────────────────────────────────────────────
-const panels = { overview: Overview, events: EventsPanel, gallery: GalleryPanel, team: TeamPanel, messages: MessagesPanel }
+/* ─── Main ─── */
+const panels = { Overview: OverviewPanel, Events: EventsPanel, Gallery: GalleryPanel, Team: TeamPanel, Messages: MessagesPanel }
 
 export default function AdminDashboard() {
-  const [active, setActive] = useState('overview')
+  const [active, setActive] = useState('Overview')
   const navigate = useNavigate()
-  const Panel = panels[active]
+  const ActivePanel = panels[active]
 
-  const logout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('admin_token')
-    navigate('/admin/login')
+    navigate('/admin')
   }
 
   return (
-    <div className="min-h-screen bg-cream flex">
+    <div className="min-h-screen bg-ivory flex">
       {/* Sidebar */}
-      <aside className="w-60 bg-teal-dark text-white flex flex-col flex-shrink-0">
-        <div className="p-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-amber flex items-center justify-center">
-              <span className="text-white font-serif font-bold text-sm">C</span>
-            </div>
-            <div>
-              <p className="font-serif text-sm font-semibold">CommunityConnect</p>
-              <p className="text-xs text-white/50">Admin Panel</p>
-            </div>
-          </div>
+      <aside className="w-56 flex-shrink-0 border-r border-ivory-dark bg-white hidden md:flex flex-col">
+        <div className="p-6 border-b border-ivory-dark">
+          <h2 className="font-display text-lg text-charcoal">Admin Panel</h2>
+          <p className="text-muted text-xs">MP Seva Samiti</p>
         </div>
-
         <nav className="flex-1 p-4 space-y-1">
-          {sidebarItems.map(({ id, icon, label }) => (
+          {navItems.map((item) => (
             <button
-              key={id}
-              onClick={() => setActive(id)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${
-                active === id ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10'
+              key={item}
+              onClick={() => setActive(item)}
+              className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                active === item
+                  ? 'text-white'
+                  : 'text-muted hover:bg-ivory-dark'
               }`}
+              style={active === item ? { background: 'linear-gradient(135deg, #FF6600, #8B0000)' } : {}}
             >
-              <span>{icon}</span> {label}
+              {item}
             </button>
           ))}
         </nav>
-
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={logout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"
-          >
-            🚪 Logout
+        <div className="p-4 border-t border-ivory-dark">
+          <button onClick={handleLogout} className="w-full text-left px-4 py-2.5 rounded-xl text-sm text-crimson hover:bg-crimson/10 transition-colors font-medium">
+            Sign Out
           </button>
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 p-8 overflow-auto">
-        <Panel />
-      </main>
+      {/* Main */}
+      <div className="flex-1 flex flex-col">
+        {/* Top bar (mobile nav) */}
+        <header className="md:hidden border-b border-ivory-dark bg-white px-4 py-3 flex items-center justify-between">
+          <h2 className="font-display text-lg text-charcoal">Admin</h2>
+          <select
+            value={active}
+            onChange={(e) => setActive(e.target.value)}
+            className="border border-ivory-dark rounded-lg px-3 py-1.5 text-sm text-charcoal bg-ivory"
+          >
+            {navItems.map((item) => <option key={item}>{item}</option>)}
+          </select>
+        </header>
+
+        <main className="flex-1 p-6 md:p-10 max-w-5xl">
+          <ActivePanel />
+        </main>
+      </div>
     </div>
   )
 }
