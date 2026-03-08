@@ -4,14 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        teal:         { DEFAULT: '#1a6b5e', light: '#2a8f7f', dark: '#0f4a40' },
-        amber:        { DEFAULT: '#e8973a', light: '#f5b563' },
-        cream:        { DEFAULT: '#f9f5ef', dark: '#ede8df' },
-        charcoal:     '#2a2a2a',
+        saffron:  { DEFAULT: '#FF6600', light: '#FF8533', dark: '#CC5200' },
+        crimson:  { DEFAULT: '#8B0000', light: '#A50000', dark: '#5C0000' },
+        gold:     { DEFAULT: '#D4A017', light: '#E8B830' },
+        ivory:    { DEFAULT: '#FDF8F0', dark: '#F5EDD8' },
+        charcoal: '#1A1A1A',
+        muted:    '#5C5C5C',
       },
       fontFamily: {
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-        sans:  ['DM Sans', 'sans-serif'],
+        display: ['Cinzel', 'Georgia', 'serif'],
+        body:    ['Mukta', 'Noto Sans Devanagari', 'sans-serif'],
+        hindi:   ['Noto Sans Devanagari', 'Mukta', 'sans-serif'],
+      },
+      backgroundImage: {
+        'pratap-gradient': 'linear-gradient(135deg, #8B0000 0%, #CC5200 50%, #FF6600 100%)',
       },
     },
   },
