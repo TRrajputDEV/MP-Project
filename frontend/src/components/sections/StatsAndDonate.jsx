@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 
 const stats = [
-  { value: '500+', labelHi: 'सदस्य',          labelEn: 'Members' },
-  { value: '80+',  labelHi: 'कार्यक्रम',       labelEn: 'Events Held' },
-  { value: '12',   labelHi: 'शहर',             labelEn: 'Cities' },
-  { value: '5K+',  labelHi: 'लाभान्वित परिवार', labelEn: 'Families Helped' },
-  { value: '6+',   labelHi: 'वर्षों का अनुभव',  labelEn: 'Years of Service' },
+  { value: '500+', label: 'Members' },
+  { value: '80+',  label: 'Events Held' },
+  { value: '12',   label: 'Cities' },
+  { value: '5K+',  label: 'Families Helped' },
+  { value: '6+',   label: 'Years of Service' },
 ]
 
 export function StatsStrip() {
@@ -25,17 +25,11 @@ export function StatsStrip() {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          {stats.map(({ value, labelHi, labelEn }, i) => (
-            <div key={labelEn} className={`text-center ${i === 4 ? 'col-span-2 md:col-span-1' : ''}`}>
+          {stats.map(({ value, label }, i) => (
+            <div key={label} className={`text-center ${i === 4 ? 'col-span-2 md:col-span-1' : ''}`}>
               <p className="font-display text-4xl md:text-5xl font-bold text-gold">{value}</p>
-              <p
-                className="text-white/80 text-sm mt-1"
-                style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
-              >
-                {labelHi}
-              </p>
-              <p className="text-white/50 text-xs mt-0.5" style={{ fontFamily: 'Mukta, sans-serif' }}>
-                {labelEn}
+              <p className="text-white/70 text-sm mt-1">
+                {label}
               </p>
             </div>
           ))}
@@ -60,22 +54,15 @@ export function DonateStrip() {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <p
-              className="text-white/60 text-sm mb-1"
-              style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
-            >
-              🙏 आपका सहयोग हमारी शक्ति है
-            </p>
             <h2
               className="text-white font-display text-2xl md:text-3xl"
             >
               The Best Way to Make a Difference
             </h2>
             <p
-              className="text-white/60 mt-1"
-              style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif', fontSize: '0.9rem' }}
+              className="text-white/60 mt-1 text-sm"
             >
-              समाज की सेवा में अपना योगदान दें — हर राशि महत्वपूर्ण है
+              Contribute to community service — every amount counts
             </p>
           </div>
           <Link
@@ -83,7 +70,7 @@ export function DonateStrip() {
             className="flex-shrink-0 font-display font-bold text-white text-base px-10 py-4 rounded-full shadow-xl hover:scale-105 transition-transform"
             style={{ background: 'linear-gradient(135deg, #FF6600, #CC5200)' }}
           >
-            🙏 DONATE NOW · दान करें
+            🙏 Donate Now
           </Link>
         </div>
       </div>

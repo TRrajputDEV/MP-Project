@@ -4,33 +4,27 @@ import { Link } from 'react-router-dom'
 const events = [
   {
     id: 1,
-    titleHi: 'वार्षिक महोत्सव',
-    titleEn: 'Annual Festival',
+    title: 'Annual Festival',
     date: 'April 15, 2025',
     location: 'City Park, Main Ground',
     type: 'upcoming',
-    desc: 'हमारे वार्षिक महोत्सव में शामिल हों — सांस्कृतिक कार्यक्रम, प्रतियोगिताएं और भव्य आयोजन।',
-    descEn: 'Join our grand annual festival — cultural programs, competitions and celebrations.',
+    desc: 'Join our grand annual festival — cultural programs, competitions and celebrations.',
   },
   {
     id: 2,
-    titleHi: 'युवा नेतृत्व कार्यशाला',
-    titleEn: 'Youth Leadership Workshop',
+    title: 'Youth Leadership Workshop',
     date: 'March 28, 2025',
     location: 'Community Hall, Block B',
     type: 'upcoming',
-    desc: 'युवाओं को नेतृत्व कौशल प्रदान करने वाली एक अनूठी कार्यशाला।',
-    descEn: 'A unique workshop empowering youth with leadership skills.',
+    desc: 'A unique workshop empowering youth with leadership skills.',
   },
   {
     id: 3,
-    titleHi: 'शीतकालीन खाद्य वितरण',
-    titleEn: 'Winter Food Drive',
+    title: 'Winter Food Drive',
     date: 'December 10, 2024',
     location: 'District Centre',
     type: 'past',
-    desc: '2,000 किलोग्राम से अधिक खाद्य सामग्री जरूरतमंद परिवारों को वितरित की गई।',
-    descEn: 'Over 2,000 kg of food distributed to families in need.',
+    desc: 'Over 2,000 kg of food distributed to families in need.',
   },
 ]
 
@@ -49,27 +43,21 @@ export default function EventsSection() {
             <h2 className="font-display text-3xl md:text-4xl text-charcoal">
               Our Events
             </h2>
-            <p
-              className="text-muted mt-1"
-              style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
-            >
-              हमारे कार्यक्रम
-            </p>
           </div>
           <Link
             to="/events"
             className="text-saffron text-sm font-display font-semibold hover:text-crimson transition-colors self-start md:self-auto"
           >
-            सभी देखें / View All →
+            View All →
           </Link>
         </div>
 
         {/* Tab toggle */}
         <div className="flex gap-1 mb-10 bg-ivory-dark w-fit p-1 rounded-full">
           {[
-            { val: 'upcoming', labelHi: 'आगामी', labelEn: 'Upcoming' },
-            { val: 'past',     labelHi: 'पिछले',  labelEn: 'Past' },
-          ].map(({ val, labelHi, labelEn }) => (
+            { val: 'upcoming', label: 'Upcoming' },
+            { val: 'past',     label: 'Past' },
+          ].map(({ val, label }) => (
             <button
               key={val}
               onClick={() => setTab(val)}
@@ -80,7 +68,7 @@ export default function EventsSection() {
               }`}
               style={tab === val ? { background: 'linear-gradient(135deg, #FF6600, #8B0000)' } : {}}
             >
-              {labelHi} / {labelEn}
+              {label}
             </button>
           ))}
         </div>
@@ -128,18 +116,14 @@ export default function EventsSection() {
 
               <div className="p-5">
                 <h3
-                  className="font-semibold text-charcoal mb-0.5"
-                  style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif', fontSize: '1.05rem' }}
+                  className="font-display font-semibold text-charcoal mb-1"
+                  style={{ fontSize: '1.05rem' }}
                 >
-                  {ev.titleHi}
+                  {ev.title}
                 </h3>
-                <p className="font-display text-xs text-saffron mb-3">{ev.titleEn}</p>
                 <p className="text-muted text-xs mb-0.5">📅 {ev.date}</p>
                 <p className="text-muted text-xs mb-3">📍 {ev.location}</p>
-                <p
-                  className="text-sm leading-relaxed text-muted"
-                  style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
-                >
+                <p className="text-sm leading-relaxed text-muted">
                   {ev.desc}
                 </p>
               </div>

@@ -27,12 +27,8 @@ export default function Footer() {
           </div>
           <p
             className="text-white/50 text-sm leading-relaxed"
-            style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
           >
-            समाज सेवा, संस्कृति और गौरव के लिए समर्पित एक सामुदायिक संगठन।
-          </p>
-          <p className="text-white/30 text-xs mt-2" style={{ fontFamily: 'Mukta, sans-serif' }}>
-            A community organization dedicated to service, culture and pride.
+            A community organization dedicated to social service, cultural preservation and pride.
           </p>
         </div>
 
@@ -41,18 +37,17 @@ export default function Footer() {
           <h4 className="font-display text-sm text-saffron mb-4 uppercase tracking-wider">Quick Links</h4>
           <ul className="space-y-2">
             {[
-              { label: 'Home · होम', to: '/' },
-              { label: 'Events · कार्यक्रम', to: '/events' },
-              { label: 'Gallery · गैलरी', to: '/gallery' },
-              { label: 'About · हमारे बारे', to: '/about' },
-              { label: 'Donate · दान', to: '/donate' },
-              { label: 'Join · जुड़ें', to: '/join' },
+              { label: 'Home', to: '/' },
+              { label: 'Events', to: '/events' },
+              { label: 'Gallery', to: '/gallery' },
+              { label: 'About', to: '/about' },
+              { label: 'Donate', to: '/donate' },
+              { label: 'Join Us', to: '/join' },
             ].map(({ label, to }) => (
               <li key={to}>
                 <Link
                   to={to}
                   className="text-white/50 text-sm hover:text-saffron transition-colors"
-                  style={{ fontFamily: 'Mukta, sans-serif' }}
                 >
                   {label}
                 </Link>
@@ -63,14 +58,14 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h4 className="font-display text-sm text-saffron mb-4 uppercase tracking-wider">Contact · संपर्क</h4>
+          <h4 className="font-display text-sm text-saffron mb-4 uppercase tracking-wider">Contact</h4>
           <ul className="space-y-3">
             {[
               { icon: '📧', val: 'info@mpsevasamiti.org' },
               { icon: '📞', val: '+91 98765 43210' },
               { icon: '📍', val: 'Your City, Rajasthan, India' },
             ].map(({ icon, val }) => (
-              <li key={val} className="flex gap-2 text-white/50 text-sm" style={{ fontFamily: 'Mukta, sans-serif' }}>
+              <li key={val} className="flex gap-2 text-white/50 text-sm">
                 <span className="flex-shrink-0">{icon}</span>
                 <span>{val}</span>
               </li>
@@ -92,12 +87,11 @@ export default function Footer() {
 
         {/* Join CTA */}
         <div>
-          <h4 className="font-display text-sm text-saffron mb-4 uppercase tracking-wider">Join Us · जुड़ें</h4>
+          <h4 className="font-display text-sm text-saffron mb-4 uppercase tracking-wider">Join Us</h4>
           <p
             className="text-white/50 text-sm leading-relaxed mb-5"
-            style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
           >
-            हमारे WhatsApp समूह से जुड़ें और हमारी गतिविधियों का हिस्सा बनें।
+            Join our WhatsApp community and be part of our activities.
           </p>
           <Link
             to="/join"
@@ -114,8 +108,8 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/5 py-4 text-center">
-        <p className="text-white/20 text-xs" style={{ fontFamily: 'Mukta, sans-serif' }}>
-          © {new Date().getFullYear()} Maharana Pratap Seva Samiti · सर्वाधिकार सुरक्षित
+        <p className="text-white/20 text-xs">
+          © {new Date().getFullYear()} Maharana Pratap Seva Samiti · All rights reserved
         </p>
       </div>
     </footer>

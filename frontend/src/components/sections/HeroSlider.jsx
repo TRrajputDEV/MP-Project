@@ -4,47 +4,37 @@ import { Link } from 'react-router-dom'
 const slides = [
   {
     id: 1,
-    // Replace these gradient backgrounds with actual image URLs when available
     bg: 'linear-gradient(135deg, #3D0000 0%, #8B0000 40%, #CC5200 100%)',
-    tagHi: '🚩 जय एकलिंग',
-    tagEn: 'Jai Eklingji',
-    titleHi: 'वीरता और सेवा',
-    titleEn: 'Valor & Service',
-    subtitleHi: 'महाराणा प्रताप की विरासत को आगे बढ़ाते हुए समाज की सेवा में समर्पित',
-    subtitleEn: 'Dedicated to community service, carrying forward the legacy of Maharana Pratap',
-    ctaLabel: 'हमारे बारे में जानें',
+    tag: '🚩 Jai Eklingji',
+    title: 'Valor & Service',
+    subtitle: 'Dedicated to community service, carrying forward the legacy of Maharana Pratap.',
+    ctaLabel: 'About Us',
     ctaTo: '/about',
-    ctaSecondary: 'कार्यक्रम देखें',
+    ctaSecondary: 'Our Events',
     ctaSecondaryTo: '/events',
     pattern: 'spears',
   },
   {
     id: 2,
     bg: 'linear-gradient(135deg, #1A0000 0%, #5C0000 40%, #8B0000 100%)',
-    tagHi: '📅 आगामी कार्यक्रम',
-    tagEn: 'Upcoming Events',
-    titleHi: 'साथ मिलकर बनाएं',
-    titleEn: 'Together We Build',
-    subtitleHi: 'हर कार्यक्रम एक नई शुरुआत है — समुदाय को मजबूत करने का संकल्प',
-    subtitleEn: 'Every event is a new beginning — our commitment to strengthening the community',
-    ctaLabel: 'कार्यक्रम देखें',
+    tag: '📅 Upcoming Events',
+    title: 'Together We Build',
+    subtitle: 'Every event is a new beginning — our commitment to strengthening the community.',
+    ctaLabel: 'View Events',
     ctaTo: '/events',
-    ctaSecondary: 'गैलरी देखें',
+    ctaSecondary: 'Gallery',
     ctaSecondaryTo: '/gallery',
     pattern: 'dots',
   },
   {
     id: 3,
     bg: 'linear-gradient(135deg, #2D1000 0%, #8B3000 40%, #FF6600 100%)',
-    tagHi: '🙏 दान करें',
-    tagEn: 'Support Our Cause',
-    titleHi: 'आपका योगदान',
-    titleEn: 'Your Contribution',
-    subtitleHi: 'आपके सहयोग से हम और अधिक जरूरतमंद परिवारों की मदद कर सकते हैं',
-    subtitleEn: 'With your support we can help more families and strengthen our community',
-    ctaLabel: 'अभी दान करें',
+    tag: '🙏 Support Our Cause',
+    title: 'Your Contribution Matters',
+    subtitle: 'With your support we can help more families and strengthen our community.',
+    ctaLabel: 'Donate Now',
     ctaTo: '/donate',
-    ctaSecondary: 'और जानें',
+    ctaSecondary: 'Learn More',
     ctaSecondaryTo: '/about',
     pattern: 'diamonds',
   },
@@ -128,49 +118,29 @@ export default function HeroSlider() {
       >
         <div className="max-w-2xl">
           {/* Tag */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white/90 text-xs px-4 py-1.5 rounded-full mb-6 stagger-1 fade-up"
-            style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}>
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white/90 text-xs px-4 py-1.5 rounded-full mb-6 stagger-1 fade-up">
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            {slide.tagHi} &nbsp;·&nbsp; {slide.tagEn}
+            {slide.tag}
           </div>
 
-          {/* Hindi title */}
+          {/* Title */}
           <h1
-            className="text-white mb-1 stagger-2 fade-up"
+            className="text-white font-display font-bold mb-5 stagger-2 fade-up"
             style={{
-              fontFamily: 'Noto Sans Devanagari, sans-serif',
               fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-              fontWeight: 700,
               lineHeight: 1.1,
             }}
           >
-            {slide.titleHi}
+            {slide.title}
           </h1>
 
-          {/* English subtitle title */}
-          <h2
-            className="font-display font-bold mb-5 stagger-3 fade-up"
-            style={{
-              fontSize: 'clamp(1.5rem, 3.5vw, 2.8rem)',
-              color: '#FF8533',
-            }}
-          >
-            {slide.titleEn}
-          </h2>
-
-          {/* Description */}
-          <p
-            className="text-white/75 mb-2 stagger-3 fade-up"
-            style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif', fontSize: '1rem', lineHeight: 1.7 }}
-          >
-            {slide.subtitleHi}
-          </p>
-          <p className="text-white/55 text-sm mb-8 stagger-4 fade-up" style={{ fontFamily: 'Mukta, sans-serif' }}>
-            {slide.subtitleEn}
+          {/* Subtitle */}
+          <p className="text-white/70 text-lg mb-8 max-w-lg leading-relaxed stagger-3 fade-up">
+            {slide.subtitle}
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 stagger-5 fade-up">
+          <div className="flex flex-wrap gap-4 stagger-4 fade-up">
             <Link
               to={slide.ctaTo}
               className="font-display font-semibold text-white text-sm px-7 py-3.5 rounded-full shadow-lg hover:scale-105 transition-transform"

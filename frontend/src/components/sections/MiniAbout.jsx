@@ -36,9 +36,8 @@ export default function MiniAbout() {
               <p className="font-display text-3xl font-bold text-saffron">500+</p>
               <p
                 className="text-muted text-xs mt-0.5"
-                style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
               >
-                सक्रिय सदस्य<br/><span className="font-body">Active Members</span>
+                Active Members
               </p>
             </div>
 
@@ -54,20 +53,16 @@ export default function MiniAbout() {
             <div className="section-accent" />
             <p
               className="text-saffron font-semibold text-sm mb-2 tracking-wide uppercase"
-              style={{ fontFamily: 'Mukta, sans-serif' }}
             >
-              हमारे बारे में · About Us
+              About Us
             </p>
             <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4 leading-tight">
               Maharana Pratap<br />Seva Samiti
             </h2>
             <p
-              className="text-muted leading-relaxed mb-3"
-              style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif', fontSize: '0.95rem' }}
+              className="text-muted leading-relaxed mb-6"
+              style={{ fontSize: '0.95rem' }}
             >
-              महाराणा प्रताप सेवा समिति एक सामुदायिक संगठन है जो समाज सेवा, सांस्कृतिक संरक्षण और युवा सशक्तिकरण के लिए समर्पित है। हम महाराणा प्रताप के आदर्शों — वीरता, स्वाभिमान और सेवा — से प्रेरणा लेते हैं।
-            </p>
-            <p className="text-muted text-sm leading-relaxed mb-8" style={{ fontFamily: 'Mukta, sans-serif' }}>
               Maharana Pratap Seva Samiti is a community organization dedicated to social service, cultural preservation and youth empowerment — inspired by the ideals of valor, self-respect and service.
             </p>
 
@@ -76,19 +71,15 @@ export default function MiniAbout() {
               {[
                 {
                   icon: '👁️',
-                  labelHi: 'हमारी दृष्टि',
                   labelEn: 'Our Vision',
-                  textHi: 'एक सशक्त, आत्मनिर्भर समाज',
-                  textEn: 'An empowered, self-reliant community',
+                  text: 'An empowered, self-reliant community',
                 },
                 {
                   icon: '🎯',
-                  labelHi: 'हमारा मिशन',
                   labelEn: 'Our Mission',
-                  textHi: 'सेवा, संस्कृति और गौरव',
-                  textEn: 'Service, culture and pride',
+                  text: 'Service, culture and pride',
                 },
-              ].map(({ icon, labelHi, labelEn, textHi, textEn }) => (
+              ].map(({ icon, labelEn, text }) => (
                 <div
                   key={labelEn}
                   className="bg-white rounded-xl p-4 border-l-4 shadow-sm"
@@ -96,13 +87,9 @@ export default function MiniAbout() {
                 >
                   <div className="text-xl mb-2">{icon}</div>
                   <p className="font-display text-xs text-saffron font-semibold uppercase tracking-wide">{labelEn}</p>
-                  <p
-                    className="text-charcoal font-semibold text-sm mt-1"
-                    style={{ fontFamily: 'Noto Sans Devanagari, Mukta, sans-serif' }}
-                  >
-                    {textHi}
+                  <p className="text-charcoal font-semibold text-sm mt-1">
+                    {text}
                   </p>
-                  <p className="text-muted text-xs mt-0.5">{textEn}</p>
                 </div>
               ))}
             </div>
@@ -112,7 +99,7 @@ export default function MiniAbout() {
               className="inline-flex items-center gap-2 font-display font-semibold text-sm text-white px-7 py-3 rounded-full shadow-md hover:scale-105 transition-transform"
               style={{ background: 'linear-gradient(135deg, #FF6600, #8B0000)' }}
             >
-              और पढ़ें / Read More →
+              Read More →
             </Link>
           </div>
         </div>
